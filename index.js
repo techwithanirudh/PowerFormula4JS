@@ -882,3 +882,18 @@ function IndexedDB(name, version) {
     };
   };
 }
+
+// Make a function to set a variable to a value
+function SetVar(name, value) {
+  window[name] = value;
+}
+
+// Make a function to get a variable's value
+function GetVar(name) {
+  return window[name];
+}
+
+// Make a function to delete a variable
+function DeleteVar(name) {
+  delete window[name];
+}
