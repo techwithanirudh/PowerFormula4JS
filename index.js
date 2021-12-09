@@ -762,3 +762,123 @@ function Max(num1, num2) {
 function Abs(num) {
   return Math.abs(num);
 }
+
+// Create an indexed db wrapper
+function IndexedDB(name, version) {
+  this.name = name;
+  this.version = version;
+  this.db = null;
+  this.request = window.indexedDB.open(this.name, this.version);
+  this.request.onerror = function (event) {
+    console.log("Error: " + event.target.errorCode);
+  };
+  this.request.onsuccess = function (event) {
+    this.db = event.target.result;
+  };
+  this.request.onupgradeneeded = function (event) {
+    this.db = event.target.result;
+    this.db.createObjectStore(this.name, {
+      keyPath: "id",
+      autoIncrement: true,
+    });
+  };
+  this.add = function (data) {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.add(data);
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.get = function (id) {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.get(id);
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.delete = function (id) {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.delete(id);
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.clear = function () {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.clear();
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.count = function () {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.count();
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.openCursor = function () {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.openCursor();
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.openKeyCursor = function () {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.openKeyCursor();
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.getAll = function () {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.getAll();
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+  this.getAllKeys = function () {
+    var transaction = this.db.transaction([this.name], "readwrite");
+    var objectStore = transaction.objectStore(this.name);
+    var request = objectStore.getAllKeys();
+    request.onsuccess = function (event) {
+      console.log("Success");
+    };
+    request.onerror = function (event) {
+      console.log("Error: " + event.target.errorCode);
+    };
+  };
+}
